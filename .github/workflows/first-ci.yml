@@ -1,0 +1,27 @@
+
+name: My First CI Pipeline
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  first-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Print message
+        run: echo "Hello from GitHub Actions!"
+
+      - name: Show event
+        run: echo "Triggered by ${{ github.event_name }}"
+
+      - name: Check README
+        run: test -f README.md
