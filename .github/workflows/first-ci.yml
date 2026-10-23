@@ -10,18 +10,24 @@ permissions:
   contents: read
 
 jobs:
-  first-check:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Print message
-        run: echo "Hello from GitHub Actions!"
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
 
-      - name: Show event
-        run: echo "Triggered by ${{ github.event_name }}"
+      - name: Install dependencies
+        run: npm install
 
-      - name: Check README
-        run: test -f README.md
+      - name: Run tests
+        run: npm test
+
+      - name: Build application
+        run: npm run build
