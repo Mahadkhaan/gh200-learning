@@ -4,7 +4,7 @@ name: Lesson 13 - Pull Request Trigger
 on:
   pull_request:
     branches:
-      - main
+      - features/pr-practice
 
 permissions:
   contents: read
