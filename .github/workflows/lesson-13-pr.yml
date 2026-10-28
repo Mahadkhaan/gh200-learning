@@ -1,0 +1,21 @@
+
+name: Lesson 13 - Pull Request Trigger
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show trigger event
+        run: echo "Triggered by $GITHUB_EVENT_NAME"
+
+      - name: Simulate tests
+        run: echo "PR checks completed!"
