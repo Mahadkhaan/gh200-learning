@@ -1,20 +1,34 @@
 
-name: Lesson 14 - Contexts
+name: Lesson 16 - AND and OR Conditions
 
 on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  show-information:
+  condition-lab:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display workflow information
+      - name: Show event information
         env:
           EVENT: ${{ github.event_name }}
-          USERNAME: ${{ github.actor }}
-          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
         run: |
           echo "Event: $EVENT"
-          echo "User: $USERNAME"
-          echo "Repository: $REPOSITORY"
+          echo "Branch: $BRANCH"
+
+      - name: AND condition
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        run: echo "Push to main detected!"
+
+      - name: OR condition
+        if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' }}
+        run: echo "Main branch OR manual trigger detected!"
