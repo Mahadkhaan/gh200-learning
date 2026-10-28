@@ -1,0 +1,20 @@
+
+name: Lesson 14 - Contexts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-information:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display workflow information
+        env:
+          EVENT: ${{ github.event_name }}
+          USERNAME: ${{ github.actor }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          echo "Event: $EVENT"
+          echo "User: $USERNAME"
+          echo "Repository: $REPOSITORY"
