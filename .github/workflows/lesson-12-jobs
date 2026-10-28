@@ -1,0 +1,28 @@
+
+name: Lesson 12 - Multiple Jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run tests
+        run: echo "Tests passed!"
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build application
+        run: echo "Build successful!"
+
+  deployment-preview:
+    needs: [test, build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate deployment
+        run: echo "Ready to deploy to AWS!"
