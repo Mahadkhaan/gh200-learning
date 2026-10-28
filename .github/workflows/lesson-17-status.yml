@@ -1,0 +1,31 @@
+
+name: Lesson 17 - Status Functions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  status-lab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: First step succeeds
+        run: echo "Everything is working"
+
+      - name: Simulate failure
+        run: exit 1
+
+      - name: Run on success
+        if: ${{ success() }}
+        run: echo "All previous steps passed"
+
+      - name: Run on failure
+        if: ${{ failure() }}
+        run: echo "A previous step failed!"
+
+      - name: Run regardless of status
+        if: ${{ always() }}
+        run: echo "Running even after failure"
