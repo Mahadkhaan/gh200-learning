@@ -1,0 +1,25 @@
+
+name: Lesson 8 - Actions vs Commands
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v7
+
+      - name: List repository files
+        run: ls -la
+
+      - name: Read README file
+        run: cat README.md
+
+      - name: Print success message
+        run: echo "I understand uses and run!"
