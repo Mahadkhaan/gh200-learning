@@ -1,0 +1,30 @@
+
+name: Lesson 15 - Conditional Execution
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  event-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show event
+        env:
+          EVENT: ${{ github.event_name }}
+        run: echo "Event is $EVENT"
+
+      - name: Only run on push
+        if: ${{ github.event_name == 'push' }}
+        run: echo "This was a push event!"
+
+      - name: Only run manually
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "This was manually triggered!"
