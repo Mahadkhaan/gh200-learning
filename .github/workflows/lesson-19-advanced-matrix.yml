@@ -1,0 +1,49 @@
+
+name: Lesson 19 - Advanced Matrix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} - ${{ matrix.suite }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+
+      matrix:
+        node: [22, 24]
+        suite: [unit, smoke]
+
+        exclude:
+          - node: 22
+            suite: smoke
+
+        include:
+          - node: 24
+            suite: compatibility
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Display configuration
+        env:
+          SUITE: ${{ matrix.suite }}
+        run: |
+          echo "Node version:"
+          node --version
+          echo "Suite label: $SUITE"
+
+      - name: Run tests
+        run: npm test
